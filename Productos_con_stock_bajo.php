@@ -62,7 +62,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <strong class="card-title">Listado de Productos</strong>
+                                    <strong class="card-title">Productos con stock bajo</strong>
                                 </div>
                                 <div class="card-body">
                                     <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -71,6 +71,7 @@
                                                 <!--<th>ID</th>-->
                                                 <th>Descripción</th>
                                                 <th>Stock</th>
+                                                <th>Stock Bajo</th>
                                                 <th>Precio</th>
                                                 <th>Moneda/th>
                                                 <th>Ubicación</th>
@@ -84,7 +85,8 @@
                                                     or die('No se ha podido conectar: ' . pg_last_error());
 
                                             $query = 'select distinct productos_ubicacion.id_productos_ubicacion, productos.id_producto, productos.nombre, '
-                                                    . 'productos.precio, stock, stock_bajo, productos.id_moneda, moneda, productos_ubicacion.ubicacion as pubicacion '
+                                                    . 'productos.precio, stock, stock_bajo, productos.id_moneda, moneda, productos_ubicacion.ubicacion as pubicacion, '
+                                                    . 'inventario  '
                                                     . 'from productos '
                                                     . 'inner join moneda on moneda.id_moneda = productos.id_moneda '
                                                     . 'inner join facturas_compra_detalle on facturas_compra_detalle.id_producto = productos.id_producto '
@@ -95,11 +97,7 @@
                                             $result = pg_query($query) or die('La consulta fallo: ' . pg_last_error());
 //
                                             while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-                                                echo " <tr>";
 
-                                                echo "<td>";
-                                                echo $line['nombre'];
-                                                echo "</td>\n";
 
                                                 $compras = 0;
                                                 $query_compras = 'select cantidad from facturas_compra_detalle '
@@ -142,25 +140,44 @@
                                                     $movido = $line_movido['sum'];
                                                 }
 
+                                                $stock_actual = $compras - $ventas - $baja + $movido;
+                                                $stock_bajo = $line['stock_bajo'];
 
-                                                echo "<td>";
-                                                echo $compras - $ventas - $baja + $movido;
-                                                echo "</td>\n";
+                                                if ($stock_bajo >= $stock_actual) {
 
-                                                 $nombre_format_francais = number_format($line['precio'], 2, ',', ' ');
-                                                echo "<td>";
-                                                echo $nombre_format_francais;
-                                                echo "</td>\n";
+                                                    if ($line['inventario'] > 0) {
 
-                                                echo "<td>";
-                                                echo $line['moneda'];
-                                                echo "</td>\n";
+                                                        echo " <tr>";
 
-                                                echo "<td>";
-                                                echo $line['pubicacion'];
-                                                echo "</td>\n";
-                                                //}
-                                                echo "\t</tr>\n";
+                                                        echo "<td>";
+                                                        echo $line['nombre'];
+                                                        echo "</td>\n";
+
+
+                                                        echo "<td>";
+                                                        echo $compras - $ventas - $baja + $movido;
+                                                        echo "</td>\n";
+
+                                                        echo "<td>";
+                                                        echo $stock_bajo;
+                                                        echo "</td>\n";
+
+                                                        $nombre_format_francais = number_format($line['precio'], 2, ',', ' ');
+                                                        echo "<td>";
+                                                        echo $nombre_format_francais;
+                                                        echo "</td>\n";
+
+                                                        echo "<td>";
+                                                        echo $line['moneda'];
+                                                        echo "</td>\n";
+
+                                                        echo "<td>";
+                                                        echo $line['pubicacion'];
+                                                        echo "</td>\n";
+                                                        //}
+                                                        echo "\t</tr>\n";
+                                                    }
+                                                }
                                             }
 
 //                                           

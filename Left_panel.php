@@ -18,7 +18,7 @@
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Clientes</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa fa-puzzle-piece"></i><a href="">Lista de clientes</a></li>
+                        <li><i class="fa fa-puzzle-piece"></i><a href="Clientes.php ">Lista de clientes</a></li>
 <!--                                                    <li><i class="fa fa-puzzle-piece"></i><a href="ui-buttons.html">Buttons</a></li>
                                                     <li><i class="fa fa-id-badge"></i><a href="ui-badges.html">Badges</a></li>
                                                     <li><i class="fa fa-bars"></i><a href="ui-tabs.html">Tabs</a></li>
@@ -38,15 +38,17 @@
                     <ul class="sub-menu children dropdown-menu">
                         <!--<li><i class="fa fa-table"></i><a href="tables-basic.html">Basic Table</a></li>-->
                         <li><i class="fa fa-bars "></i><a href="Productos.php">Lista de Productos</a></li>
+                        <li><i class="fa fa-bars "></i><a href="Productos_con_stock_bajo.php">Productos con stock bajo</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Movimientos</a>
+                    <a href="Index.php" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Movimientos</a>
                     
                     <ul class="sub-menu children dropdown-menu">
                         <!--<li><i class="fa fa-table"></i><a href="tables-basic.html">Basic Table</a></li>-->
-                        <li><i class="fa fa-bars"></i><a href="">Compras</a></li>
-                        <li><i class="fa fa-bars"></i><a href="">Ventas</a></li>
+                        <li><i class="fa fa-bars"></i><a href="Compras.php">Compras</a></li>
+                        <li><i class="fa fa-bars"></i><a href="Ventas.php">Ventas</a></li>
+                        <li><i class="fa fa-book"></i><a href="Arqueo_de_caja.php">Arqueo de Caja</a></li>
                     </ul>
                 </li>
 <!--                <li class="menu-item-has-children dropdown">
