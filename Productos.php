@@ -72,7 +72,7 @@
                                                 <th>Descripción</th>
                                                 <th>Stock</th>
                                                 <th>Precio</th>
-                                                <th>Moneda/th>
+                                                <th>Moneda</th>
                                                 <th>Ubicación</th>
                                             </tr>
                                         </thead>

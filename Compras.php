@@ -40,7 +40,7 @@
                 <div class="col-sm-4">
                     <div class="page-header float-left">
                         <div class="page-title">
-                            <h1>Ventas</h1>
+                            <h1>Compras</h1>
                         </div>
                     </div>
                 </div>
@@ -62,14 +62,15 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <strong class="card-title">Ventas</strong>
+                                    <strong class="card-title">Compras</strong>
                                 </div>
                                 <div class="card-body">
                                     <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Proveedor</th>
                                                 <th>Fecha</th>
+                                                <th>Proveedor</th>
+                                                <th>Factura</th>
                                                 <th>Total</th>
                                                 
                                             </tr>
@@ -80,7 +81,7 @@
 //
                                             include './Conexion.php';
 
-                                            $query = 'SELECT nombre, fecha_date, total '
+                                            $query = 'SELECT nombre, fecha_date, total, numero '
                                                     . 'FROM facturas_compra '
                                                     . 'inner join proveedor on proveedor.id_proveedor = facturas_compra.id_proveedor '
                                                     . 'where total > 0 order by fecha ';
@@ -90,14 +91,19 @@
                                                 
 
                                                 echo "<tr>";
-                                                echo "<td>";
-                                                echo $line['nombre'];
-                                                echo "</td>\n";
-
+                                                
                                                 echo "<td>";
                                                 echo $line['fecha_date'];
                                                 echo "</td>\n";
                                                 
+                                                echo "<td>";
+                                                echo $line['nombre'];
+                                                echo "</td>\n";
+                                                
+                                                echo "<td>";
+                                                echo $line['numero'];
+                                                echo "</td>\n";
+
                                                 $total = str_replace(".00", "", $line['total']);
                                                 $nombre_format_francais = number_format($total, 2, ',', ' ');
 //                                                $número_formato_inglés = number_format($número);

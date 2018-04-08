@@ -62,15 +62,14 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <strong class="card-title">Ventas</strong>
+                                    <strong class="card-title">Venta</strong>
                                 </div>
                                 <div class="card-body">
                                     <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Fecha</th>
                                                 <th>Cliente</th>
-                                                <th>Factura</th>
+                                                <th>Fecha</th>
                                                 <th>Total</th>
 
                                             </tr>
@@ -78,24 +77,19 @@
                                         <tbody>
 
                                             <?php
-//
+                                            $id_cuenta = $_GET['id'];
                                             include './Conexion.php';
 
-                                            $query = 'SELECT nombre, factura, fecha, total, id_cuenta '
+                                            $query = 'SELECT nombre, fecha, total, id_cuenta '
                                                     . 'FROM cuenta '
                                                     . 'inner join cliente on cliente.id_cliente = cuenta.id_cliente '
-                                                    . 'where total > 0 order by fecha ';
+                                                    . 'where id_cuenta = ' . $id_cuenta;
                                             $result = pg_query($query) or die('La consulta fallo: ' . pg_last_error());
 //
                                             while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
 
 
                                                 echo "<tr>";
-                                            
-                                                echo "<td>";
-                                            echo $line['fecha'];
-                                            echo "</td>\n";
-                                            
                                                 echo "<td>";
                                                 ?> 
                                             <a href="Ventas_detalle.php?id=<?php echo $line['id_cuenta'] ?>"><?php echo $line['nombre'] ?></a>
@@ -103,12 +97,10 @@
 //                                            echo $line['nombre'];
                                             echo "</td>\n";
 
-
                                             echo "<td>";
-                                            echo $line['factura'];
+                                            echo $line['fecha'];
                                             echo "</td>\n";
 
-                                            
                                             $total = str_replace(".00", "", $line['total']);
                                             $nombre_format_francais = number_format($total, 2, ',', ' ');
 //                                                $número_formato_inglés = number_format($número);
@@ -120,6 +112,95 @@
                                         pg_free_result($result);
                                         pg_close($dbconn);
                                         ?>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong class="card-title">Detalle de Venta</strong>
+                                </div>
+                                <div class="card-body">
+                                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Descripción</th>
+                                                <th>Precio Unitario</th>
+                                                <th>Unidades</th>
+                                                <th>Exentas</th>
+                                                <th>5%</th>
+                                                <th>10%</th>
+                                                <th>Total</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <?php
+                                            $id_cuenta = $_GET['id'];
+//
+                                            include './Conexion.php';
+
+                                            $query = 'SELECT nombre, cuenta_detalle.precio as c_precio, cantidad, exentas, cinco, diez, total '
+                                                    . 'FROM cuenta_detalle '
+                                                    . 'inner join productos on productos.id_producto = cuenta_detalle.id_producto '
+                                                    . 'where id_cuenta = ' . $id_cuenta;
+                                            $result = pg_query($query) or die('La consulta fallo: ' . pg_last_error());
+//
+                                            while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+
+
+                                                echo "<tr>";
+
+                                                echo "<td>";
+                                                echo $line['nombre'];
+                                                echo "</td>\n";
+//
+
+                                                $total = str_replace(".00", "", $line['c_precio']);
+                                                $nombre_format_francais = number_format($total, 2, ',', ' ');
+//                                                $número_formato_inglés = number_format($número);
+                                                echo "<td>";
+                                                echo $nombre_format_francais;
+                                                echo "</td>\n";
+
+                                                echo "<td>";
+                                                echo $line['cantidad'];
+                                                echo "</td>\n";
+
+                                                echo "<td>";
+                                                echo $line['exentas'];
+                                                echo "</td>\n";
+
+                                                echo "<td>";
+                                                echo $line['cinco'];
+                                                echo "</td>\n";
+
+                                                $total = str_replace(".00", "", $line['diez']);
+                                                $nombre_format_francais = number_format($total, 2, ',', ' ');
+//                                                $número_formato_inglés = number_format($número);
+                                                echo "<td>";
+                                                echo $nombre_format_francais;
+                                                echo "</td>\n";
+
+                                                $total = str_replace(".00", "", $line['total']);
+                                                $nombre_format_francais = number_format($total, 2, ',', ' ');
+//                                                $número_formato_inglés = number_format($número);
+                                                echo "<td>";
+                                                echo $nombre_format_francais;
+                                                echo "</td>\n";
+
+//                                                echo "<tr>";
+                                            }
+
+
+                                            pg_free_result($result);
+                                            pg_close($dbconn);
+                                            ?>
 
                                         </tbody>
                                     </table>

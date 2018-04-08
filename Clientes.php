@@ -45,7 +45,9 @@
                     <div class="page-header float-right">
                         <div class="page-title">
                             <ol class="breadcrumb text-right">
-
+                                <li><a href="Clientes_add.php">Agregar Cliente</a></li>
+                                
+                                
                             </ol>
                         </div>
                     </div>
@@ -70,7 +72,7 @@
                                                 <th>RUC</th>
                                                 <th>Telefono</th>
                                                 <th>Dirección</th>
-                                                
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -84,7 +86,7 @@
                                             $result = pg_query($query) or die('La consulta fallo: ' . pg_last_error());
 //
                                             while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-                                                
+
 
                                                 echo "<tr>";
                                                 echo "<td>";
@@ -94,19 +96,18 @@
                                                 echo "<td>";
                                                 echo $line['ci'];
                                                 echo "</td>\n";
-                                                
+
                                                 echo "<td>";
                                                 echo $line['ruc'];
                                                 echo "</td>\n";
-                                                
+
                                                 echo "<td>";
                                                 echo $line['telefono'];
                                                 echo "</td>\n";
-                                                
+
                                                 echo "<td>";
                                                 echo $line['direccion'];
                                                 echo "</td>\n";
-                                                
                                             }
 //                                           
                                             pg_free_result($result);
